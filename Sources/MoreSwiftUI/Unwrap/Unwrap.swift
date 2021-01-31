@@ -24,7 +24,7 @@ public struct Unwrap<Value, Content: View>: View {
         self.contentProvider = content
     }
     
-    var body: some View {
+    public var body: some View {
         value.map(contentProvider)
     }
 }

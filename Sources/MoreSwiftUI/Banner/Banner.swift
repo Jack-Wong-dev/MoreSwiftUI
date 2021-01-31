@@ -7,22 +7,6 @@
 
 import SwiftUI
 
-public extension View {
-    /// Presents a banner  to the user.
-    ///
-    /// - Parameters:
-    ///   - item: A binding to an optional source of truth for the alert.
-    ///     When representing a non-`nil` item, the system uses `content` to
-    ///     create a banner representation of the item.
-    ///     If the identity changes, the system dismisses a
-    ///     currently-presented banner and replace it by a new banner.
-    ///   - content: A closure returning the banner to present.
-    func banner<Item, Content: View>(item: Binding<Item?>, content: @escaping (Item) -> Content) -> some View where Item : Identifiable {
-        modifier(BannerViewModifier(data: item, contentProvider: content))
-    }
-}
-
-
 public struct BannerViewModifier<Item: Identifiable, Banner: View>: ViewModifier {
     
     @Binding var data: Item?
@@ -52,3 +36,19 @@ public struct BannerViewModifier<Item: Identifiable, Banner: View>: ViewModifier
         }
     }
 }
+
+public extension View {
+    /// Presents a banner  to the user.
+    ///
+    /// - Parameters:
+    ///   - item: A binding to an optional source of truth for the alert.
+    ///     When representing a non-`nil` item, the system uses `content` to
+    ///     create a banner representation of the item.
+    ///     If the identity changes, the system dismisses a
+    ///     currently-presented banner and replace it by a new banner.
+    ///   - content: A closure returning the banner to present.
+    func banner<Item, Content: View>(item: Binding<Item?>, content: @escaping (Item) -> Content) -> some View where Item : Identifiable {
+        modifier(BannerViewModifier(data: item, contentProvider: content))
+    }
+}
+
