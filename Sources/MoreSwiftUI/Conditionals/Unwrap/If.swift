@@ -7,6 +7,14 @@
 
 import SwiftUI
 
+/// Presents a banner  to the user.
+///
+/// - Parameters:
+///   - condition: a boolean expression.
+///     When representing a non-`nil` item, the system uses `contentProvider` to
+///     create a visual representation of the item.
+///   - contentIfTrue: A closure returning the intended view to show if the condition is true.
+///   - contentIfFalse: A closure returning the intended view to show if the condition is false.
 public struct If<IfContent: View, ElseContent: View>: View {
     
     public let condition: Bool
