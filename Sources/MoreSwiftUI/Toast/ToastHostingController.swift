@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+//MARK: - iOS
 #if os(iOS)
 final class ToastHostingController<Content: View>: UIHostingController<Content> {
     
@@ -24,6 +25,28 @@ final class ToastHostingController<Content: View>: UIHostingController<Content> 
         modalPresentationStyle = .overFullScreen
         modalTransitionStyle = .crossDissolve
         view.backgroundColor = .clear
+    }
+}
+#endif
+
+//MARK: - MacOS
+#if os(macOS)
+final class ToastHostingController<Content: View>: NSHostingController<Content>, NSWindowDelegate {
+
+    var onDismiss: (() -> Void)?
+
+    override func viewDidAppear() {
+      super.viewDidAppear()
+      NSApplication.shared.windows.first?.delegate = self
+    }
+
+    func dismissWithCompletion(_ onDismiss: (() -> Void)? = nil) {
+      self.onDismiss = onDismiss
+      dismiss(nil)
+    }
+
+    func windowDidEndSheet(_ notification: Notification) {
+      onDismiss?()
     }
 }
 #endif
