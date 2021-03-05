@@ -11,8 +11,7 @@ public struct BannerViewModifier<Item: Identifiable, Banner: View>: ViewModifier
     
     @Binding var data: Item?
     
-    var dispatchWorkHolder = DispatchWorkHolder()
-    var dissmissAfter: Double?
+//    var dissmissAfter: Double?
     
     private let contentProvider: (Item) -> Banner
     
