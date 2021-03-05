@@ -10,29 +10,39 @@ import SwiftUI
 public struct BannerViewModifier<Item: Identifiable, Banner: View>: ViewModifier {
     
     @Binding var data: Item?
+    
+    var dispatchWorkHolder = DispatchWorkHolder()
+    var dissmissAfter: Double?
+    
     private let contentProvider: (Item) -> Banner
-
+    
+//    init(data: Binding<Item?>, dismissAfter: Double? = 3.0, @ViewBuilder contentProvider: @escaping (Item) -> Banner) {
+//        _data = data
+//        self.dissmissAfter = dismissAfter
+//        self.contentProvider = contentProvider
+//    }
+    
     init(data: Binding<Item?>, @ViewBuilder contentProvider: @escaping (Item) -> Banner) {
         _data = data
         self.contentProvider = contentProvider
     }
     
     public func body(content: Content) -> some View {
-        ZStack {
+         ZStack(alignment: .top) {
             content
             data.map(contentProvider)
-                .onTapGesture {
-                    withAnimation {
-                        data = nil
-                    }
-                }
+                .transition(AnyTransition.move(edge: .top).combined(with:.opacity))
                 .onAppear(perform: {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                         withAnimation {
                             data = nil
                         }
                     }
                 })
+                .onDisappear(perform: {
+                    
+                })
+                .zIndex(1)
         }
     }
 }
@@ -50,5 +60,8 @@ public extension View {
     func banner<Item, Content: View>(item: Binding<Item?>, content: @escaping (Item) -> Content) -> some View where Item : Identifiable {
         modifier(BannerViewModifier(data: item, contentProvider: content))
     }
+    
+    
 }
+
 
