@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "MoreSwiftUI",
+        "repositoryURL": "https://github.com/Jack-Wong-dev/MoreSwiftUI.git",
+        "state": {
+          "branch": null,
+          "revision": "d0df5b1daad49e785c7372be7a9a60c2993de1ff",
+          "version": "0.0.8"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
